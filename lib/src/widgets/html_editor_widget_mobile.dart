@@ -364,6 +364,8 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       }
                       summernoteToolbar = summernoteToolbar + '],';
                       summernoteCallbacks = summernoteCallbacks + '}';
+
+                         ///remove resize bar and bottom line
                       await controller.evaluateJavascript(source: """
                           \$('#summernote-2').summernote({
                               placeholder: "${widget.htmlEditorOptions.hint ?? ""}",
@@ -376,6 +378,10 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                               ${widget.htmlEditorOptions.customOptions}
                               $summernoteCallbacks
                           });
+
+                          \$('.note-resizebar').remove();
+                          \$('.note-editor').css('border-bottom', 'none');
+                          \$('.note-statusbar').hide();
                           
                           \$('#summernote-2').on('summernote.change', function(_, contents, \$editable) {
                             window.flutter_inappwebview.callHandler('onChangeContent', contents);
